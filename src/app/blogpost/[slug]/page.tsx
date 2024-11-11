@@ -1,7 +1,8 @@
 import React from "react";
 
-const Blogpost = ({ params }: { params: { slug: string } }) => {
-  return <section>My post: {params.slug}</section>;
+const BlogPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const slug = (await params).slug;
+  return <div>My Post: {slug}</div>;
 };
 
-export default Blogpost;
+export default BlogPage;
