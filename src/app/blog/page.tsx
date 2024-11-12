@@ -2,35 +2,18 @@ import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-const blogs = [
-  {
-    title: "Getting Started with React",
-    description:
-      "Learn the basics of React and how to build your first component based application",
-    slug: "getting-started-with-react",
-    date: "2023-12-01",
-    author: "John Doe",
-    image: "/react.webp",
-  },
-  {
-    title: "Advanced CSS Techniques",
-    description:
-      "Master modern CSS with these advanced styling techniques and best practices",
-    slug: "advanced-css-techniques",
-    date: "2023-11-28",
-    author: "Jane Smith",
-    image: "/tailwind.webp",
-  },
-  {
-    title: "JavaScript ES6 Features",
-    description: "Explore the powerful new features introduced in ECMAScript 6",
-    slug: "javascript-es6-features",
-    date: "2023-11-25",
-    author: "Mike Johnson",
-    image: "/nextjs.webp",
-  },
-];
+const contentDirectory = path.join(process.cwd(), "src", "content");
+const dirContent = fs.readdirSync(contentDirectory, "utf-8");
+const blogs = dirContent.map((file) => {
+  const fileContent = fs.readFileSync(`src/content/${file}`, "utf-8");
+  const { data } = matter(fileContent);
+
+  return data;
+});
 
 const BlogPage = () => {
   return (
@@ -61,7 +44,7 @@ const BlogPage = () => {
                 <div className="flex items-center text-sm mb-2 animate-slideRight">
                   <span>{blog.author}</span>
                   <span className="mx-2">•</span>
-                  <span>{new Date(blog.date).toLocaleDateString()}</span>
+                  <span>{blog.date.toLocaleDateString()}</span>
                 </div>
 
                 <h2
