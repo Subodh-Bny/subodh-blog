@@ -11,16 +11,39 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "./ThemeButton";
+import LoadingBar from "react-top-loading-bar";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [progress, setProgress] = useState(0);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setProgress(30);
+    setTimeout(() => {
+      setProgress(70);
+    }, 100);
+    setTimeout(() => {
+      setProgress(100);
+    }, 800);
+  }, [pathname]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setProgress(0);
+    }, 900);
+  }, [pathname]);
+
   return (
     <nav className="bg-background/50 sticky top-0 z-50 backdrop-blur border-b ">
+      <LoadingBar progress={progress} color="green" />
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="text-2xl font-bold text-primary">
-              SubodhBlog
+              NextBlog
             </Link>
           </div>
 
@@ -76,7 +99,7 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent>
                 <SheetHeader>
-                  <SheetTitle>SubodhBlog</SheetTitle>
+                  <SheetTitle>NextBlog</SheetTitle>
                   <SheetDescription className="flex flex-col  space-y-4 items-center">
                     <Link href="/" className=" ">
                       Home

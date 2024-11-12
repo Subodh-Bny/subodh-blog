@@ -7,8 +7,9 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import rehypePrettyCode from "rehype-pretty-code";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { unified } from "unified";
-import { reporter } from "vfile-reporter";
 
 const BlogPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const slug = (await params).slug;
@@ -23,6 +24,15 @@ const BlogPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const processedContent = await unified()
     .use(remarkParse)
     .use(remarkRehype)
+    .use(rehypePrettyCode, {
+      theme: "catppuccin-mocha",
+      transformers: [
+        transformerCopyButton({
+          visibility: "always",
+          feedbackDuration: 3_000,
+        }),
+      ],
+    })
     .use(rehypeDocument, { title: "" })
     .use(rehypeFormat)
     .use(rehypeStringify)
@@ -34,7 +44,7 @@ const BlogPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
     <div className="min-h-screen ">
       <div className="max-w-4xl mx-auto px-6 py-12">
         <article className=" rounded-2xl shadow-xl p-8">
-          <h1 className="text-5xl font-extrabold  tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+          <h1 className="text-4xl font-extrabold  tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
             {blog.title}
           </h1>
           <p className="text-base mb-4 border-l-4 border-gray-500 pl-4 italic">
@@ -56,7 +66,7 @@ const BlogPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
           </div>
 
           <div
-            className="prose prose-xl prose-purple prose-p:text-gray-700 prose-a:text-purple-600 prose-headings:"
+            className="prose dark:prose-invert prose-xl prose-p:text-justify prose-purple prose-p:text-gray-700 dark:prose-p:text-white prose-a:text-purple-600 prose-headings:"
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
         </article>

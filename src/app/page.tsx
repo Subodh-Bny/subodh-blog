@@ -1,31 +1,50 @@
 "use client";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Typed from "typed.js";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: ["<i>Tech</i>", " &amp; Life."],
+      typeSpeed: 50,
+      loop: true,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
+
   return (
     <main>
       <section className="container px-4 py-10 mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
         <div className="w-full text-center lg:text-left lg:w-1/2 lg:-mt-8">
           <h1 className="text-3xl leading-snug text-gray-800 dark:text-gray-200 md:text-4xl">
-            A <span className="font-semibold">free repository</span> for
-            community <br className="hidden lg:block" /> components using{" "}
-            <span className="font-semibold underline decoration-primary">
-              Tailwind CSS
-            </span>
+            Welcome to my <span className="font-semibold">Personal Blog</span>{" "}
+            where I share
+            <br className="hidden lg:block" /> thoughts on{" "}
+            <span
+              className="font-semibold underline decoration-primary"
+              ref={el}
+            ></span>
           </h1>
           <p className="mt-4 text-lg text-gray-500 dark:text-gray-300">
-            Open source Tailwind UI components and templates to{" "}
-            <br className="hidden lg:block" /> bootstrap your new apps, projects
-            or landing sites!
+            Join me on this journey as I write about technology, personal
+            growth,
+            <br className="hidden lg:block" /> and share insights from my
+            experiences and learnings!
           </p>
         </div>
         <div className="w-full mt-4 lg:mt-0 lg:w-1/2">
           <Image
             width={500}
             height={500}
-            src="https://www.creative-tim.com/twcomponents/svg/website-designer-bro-purple.svg"
-            alt="tailwind css components"
+            src="/hero.svg"
+            alt="blog hero image"
             className="w-full h-full max-w-md mx-auto "
           />
         </div>
@@ -225,10 +244,10 @@ export default function Home() {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">
-                  Tailwind CSS Best Practices
+                  Advance CSS techniques
                 </h3>
                 <p className="text-gray-600">
-                  Modern styling approaches with Tailwind
+                  Modern styling approaches with CSS
                 </p>
               </div>
             </div>
@@ -251,74 +270,6 @@ export default function Home() {
                 <p className="text-gray-600">
                   Exploring the latest Next.js updates
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 transition-all duration-700 ease-out delay-100 motion-safe:animate-pulse">
-            Our Latest Projects
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Project Card 1 */}
-            <div className="group  rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="aspect-video  animate-[pulse_2s_ease-in-out]">
-                <Image
-                  src={"/ecommerce.png"}
-                  height={500}
-                  width={500}
-                  alt="portfolio"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">
-                  E-Commerce Platform
-                </h3>
-                <p className="text-gray-600">
-                  Modern shopping experience with React
-                </p>
-              </div>
-            </div>
-
-            {/* Project Card 2 */}
-            <div className="group  rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="aspect-video  animate-[pulse_2s_ease-in-out]">
-                {/* Image placeholder */}
-                <Image
-                  src={"/portfolio.png"}
-                  height={500}
-                  width={500}
-                  alt="portfolio"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">
-                  Portfolio Website
-                </h3>
-                <p className="text-gray-600">Responsive personal showcase</p>
-              </div>
-            </div>
-
-            {/* Project Card 3 */}
-            <div className="group  rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="aspect-video  animate-[pulse_2s_ease-in-out]">
-                {/* Image placeholder */}
-                <Image
-                  src={"/chat-app.png"}
-                  height={500}
-                  width={500}
-                  alt="portfolio"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">Chat App</h3>
-                <p className="text-gray-600">Cross-platform chat application</p>
               </div>
             </div>
           </div>
