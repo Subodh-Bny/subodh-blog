@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import Typed from "typed.js";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const el = useRef(null);
@@ -52,32 +52,26 @@ export default function Home() {
       <section className="container px-4 py-16 mx-auto">
         <div className="text-center">
           <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-200">
-            Simple, Transparent Pricing
+            Welcome to Our Platform
           </h2>
           <p className="mt-4 text-gray-500 dark:text-gray-300">
-            Choose the plan that&apos;s right for you
+            Discover amazing features and solutions for your needs
           </p>
         </div>
 
         <div className="grid gap-8 mt-12 lg:grid-cols-3">
-          {/* Basic Plan */}
+          {/* Latest Posts - keeping this section */}
           <div className="flex flex-col p-6 space-y-6 rounded-lg shadow-md border dark:border-gray-700 hover:shadow-xl transition-shadow">
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-                Basic
+                Latest Posts
               </h3>
               <p className="mt-4 text-gray-500 dark:text-gray-300">
-                Perfect for starters
+                Fresh content daily
               </p>
-              <div className="mt-8">
-                <span className="text-4xl font-bold text-gray-800 dark:text-gray-200">
-                  $9
-                </span>
-                <span className="text-gray-500 dark:text-gray-300">/month</span>
-              </div>
             </div>
             <ul className="space-y-4">
-              {["Up to 5 projects", "2GB Storage", "Basic Support"].map(
+              {["Trending topics", "Daily updates", "Featured writers"].map(
                 (feature) => (
                   <li key={feature} className="flex items-center">
                     <svg
@@ -100,35 +94,44 @@ export default function Home() {
                 )
               )}
             </ul>
-            <Button className="w-full px-4 py-2 mt-auto text-white transition-colors duration-300 transform rounded-lg bg-primary hover:bg-primary/70 focus:outline-none">
-              Get Started
-            </Button>
+            <Link
+              href={"/blog"}
+              className="w-full px-4 py-2 mt-auto text-white transition-colors duration-300 transform rounded-lg bg-primary hover:bg-primary/70 focus:outline-none text-center"
+            >
+              Read More
+            </Link>
           </div>
 
-          {/* Pro Plan */}
+          {/* Quick Bio */}
           <div className="flex flex-col p-6 space-y-6 rounded-lg shadow-md border border-primary dark:border-primary hover:shadow-xl transition-shadow">
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-                Pro
+                Connect With Me
               </h3>
               <p className="mt-4 text-gray-500 dark:text-gray-300">
-                For growing businesses
+                Let&apos;s stay in touch
               </p>
-              <div className="mt-8">
-                <span className="text-4xl font-bold text-gray-800 dark:text-gray-200">
-                  $29
-                </span>
-                <span className="text-gray-500 dark:text-gray-300">/month</span>
-              </div>
             </div>
             <ul className="space-y-4">
               {[
-                "Up to 15 projects",
-                "10GB Storage",
-                "Priority Support",
-                "Advanced Features",
-              ].map((feature) => (
-                <li key={feature} className="flex items-center">
+                // { platform: "Twitter", handle: "@yourhandle" },
+                {
+                  platform: "GitHub",
+                  handle: "@Subodh-Bny",
+                  link: "https://github.com/Subodh-Bny",
+                },
+                {
+                  platform: "LinkedIn",
+                  handle: "in/subodh-adhikari-0469922a7",
+                  link: "https://www.linkedin.com/in/subodh-adhikari-0469922a7/",
+                },
+                {
+                  platform: "Instagram",
+                  handle: "@__subod_h",
+                  link: "https://www.instagram.com/__subod_h/",
+                },
+              ].map((social) => (
+                <li key={social.platform} className="flex items-center">
                   <svg
                     className="w-5 h-5 text-primary"
                     fill="none"
@@ -142,64 +145,41 @@ export default function Home() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="ml-2 text-gray-600 dark:text-gray-300">
-                    {feature}
-                  </span>
+                  <Link
+                    href={social.link}
+                    className="ml-2 text-gray-600 dark:text-gray-300"
+                    target="_blank"
+                  >
+                    {social.platform}: {social.handle}
+                  </Link>
                 </li>
               ))}
             </ul>
-            <Button className="w-full px-4 py-2 mt-auto text-white transition-colors duration-300 transform rounded-lg bg-primary hover:bg-primary/70 focus:outline-none">
-              Get Started
-            </Button>
           </div>
 
-          {/* Enterprise Plan */}
+          {/* Social Connect */}
           <div className="flex flex-col p-6 space-y-6 rounded-lg shadow-md border dark:border-gray-700 hover:shadow-xl transition-shadow">
             <div>
               <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-                Enterprise
+                Quick Bio
               </h3>
               <p className="mt-4 text-gray-500 dark:text-gray-300">
-                For large organizations
+                Tech enthusiast & blogger sharing insights on web development
+                and design
               </p>
-              <div className="mt-8">
-                <span className="text-4xl font-bold text-gray-800 dark:text-gray-200">
-                  $99
-                </span>
-                <span className="text-gray-500 dark:text-gray-300">/month</span>
-              </div>
             </div>
-            <ul className="space-y-4">
-              {[
-                "Unlimited projects",
-                "Unlimited Storage",
-                "24/7 Support",
-                "Custom Features",
-                "API Access",
-              ].map((feature) => (
-                <li key={feature} className="flex items-center">
-                  <svg
-                    className="w-5 h-5 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-2 text-gray-600 dark:text-gray-300">
-                    {feature}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <Button className="w-full px-4 py-2 mt-auto text-white transition-colors duration-300 transform rounded-lg bg-primary hover:bg-primary/70 focus:outline-none">
-              Contact Sales
-            </Button>
+            <div className="space-y-4">
+              <p className="text-gray-600 dark:text-gray-300">
+                Based in Nepal, writing about technology, design, and
+                development.
+              </p>
+            </div>
+            <Link
+              href={"/about"}
+              className="w-full px-4 py-2 mt-auto text-white transition-colors duration-300 transform rounded-lg bg-primary hover:bg-primary/70 focus:outline-none text-center"
+            >
+              Read Full Bio
+            </Link>
           </div>
         </div>
       </section>

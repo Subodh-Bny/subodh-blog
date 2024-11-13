@@ -1,7 +1,7 @@
 // app/components/Navbar.tsx
 "use client";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { buttonVariants } from "./ui/button";
 import {
   Sheet,
   SheetContent,
@@ -74,8 +74,13 @@ const Navbar = () => {
               Contact
             </Link>
             <div className="flex gap-2">
-              <Button variant={"outline"}>Login</Button>
-              <Button variant={"outline"}>Signup</Button>
+              <Link
+                href={"/login"}
+                className={buttonVariants({ variant: "outline" })}
+              >
+                Login
+              </Link>
+              {/* <Button variant={"outline"}>Signup</Button> */}
               <ModeToggle />
             </div>
           </div>
@@ -114,8 +119,13 @@ const Navbar = () => {
                       Contact
                     </Link>
                     <span className="flex flex-col gap-2 items-center">
-                      <Button variant={"outline"}>Login</Button>
-                      <Button variant={"outline"}>Signup</Button>
+                      <Link
+                        href={"/login"}
+                        className={buttonVariants({ variant: "outline" })}
+                      >
+                        Login
+                      </Link>{" "}
+                      {/* <Button variant={"outline"}>Signup</Button> */}
                     </span>
                   </SheetDescription>
                 </SheetHeader>
