@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "react-hot-toast";
-import { QueryProvider } from "./context/QueryProvider";
+import { QueryProvider } from "../context/QueryProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
