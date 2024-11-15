@@ -49,11 +49,7 @@ const createUser = async (req: Request) => {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Internal Server Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error", error },
-      { status: 500 }
-    );
+    return internalError("Error in  createUser  controller", error);
   }
 };
 

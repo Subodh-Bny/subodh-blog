@@ -15,3 +15,14 @@ interface IUser {
   name?: string;
   password?: string;
 }
+
+interface IBlog {
+  _id?: string;
+  title: string;
+  slug: string;
+  description: string;
+  createdAt?: string;
+  author: string;
+  image: string;
+  content: unknown;
+}
