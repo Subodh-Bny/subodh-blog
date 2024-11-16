@@ -43,6 +43,7 @@
     "react-top-loading-bar": "^2.3.1",
     "rehype-document": "^7.0.3",
     "rehype-format": "^5.0.1",
+    "rehype-parse": "^9.0.1",
     "rehype-pretty-code": "^0.14.0",
     "rehype-stringify": "^10.0.1",
     "remark-parse": "^11.0.0",

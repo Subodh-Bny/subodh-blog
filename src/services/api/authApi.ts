@@ -5,6 +5,7 @@ import endpoints from "../endpoints";
 import { requestError } from "./requestError";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { IApiResponse, IQueryResponse, IUser } from "@/types";
 
 interface ILoginResponse<T = unknown> extends IQueryResponse {
   token?: string;

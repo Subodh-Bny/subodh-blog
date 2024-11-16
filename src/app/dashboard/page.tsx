@@ -14,6 +14,7 @@ import {
 import { useDeleteBlog, useGetAllBlogs } from "@/services/api/blogApi";
 import dynamic from "next/dynamic";
 import { toast } from "react-hot-toast";
+import { IBlog } from "@/types";
 
 const EditForm = dynamic(() => import("./blog/EditForm"), { ssr: false });
 
@@ -23,7 +24,7 @@ export default function BlogPage() {
   const [currentPost, setCurrentPost] = useState<IBlog>({
     _id: "",
     title: "",
-    content: "",
+    content: { blocks: [] },
     slug: "",
     description: "",
     author: "",
@@ -40,7 +41,8 @@ export default function BlogPage() {
     setCurrentPost({
       _id: "",
       title: "",
-      content: "",
+      content: { blocks: [] },
+
       slug: "",
       description: "",
       author: "",

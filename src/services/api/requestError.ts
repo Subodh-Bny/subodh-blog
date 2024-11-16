@@ -1,3 +1,4 @@
+import { IApiResponse } from "@/types";
 import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 

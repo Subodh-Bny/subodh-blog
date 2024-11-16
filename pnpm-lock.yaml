@@ -110,6 +110,9 @@ importers:
       rehype-format:
         specifier: ^5.0.1
         version: 5.0.1
+      rehype-parse:
+        specifier: ^9.0.1
+        version: 9.0.1
       rehype-pretty-code:
         specifier: ^0.14.0
         version: 0.14.0(shiki@1.22.2)

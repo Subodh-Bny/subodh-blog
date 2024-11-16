@@ -9,6 +9,7 @@ import Editor from "@/components/Editor";
 import { OutputData } from "@editorjs/editorjs";
 import { useCreateBlog, useUpdateBlog } from "@/services/api/blogApi";
 import axios from "axios";
+import { IBlog } from "@/types";
 
 const EditForm = ({
   post,
@@ -79,9 +80,9 @@ const EditForm = ({
         data.image = imageUrl;
 
         if (!data._id?.trim()) {
-          mutate({ ...data, content });
+          mutate({ ...data, content: content as OutputData });
         } else {
-          updateBlog({ ...data, content });
+          updateBlog({ ...data, content: content as OutputData });
         }
         // console.log("Blog saved:", response);
       } catch (error) {
@@ -89,9 +90,9 @@ const EditForm = ({
       }
     } else {
       if (!data._id?.trim()) {
-        mutate({ ...data, content });
+        mutate({ ...data, content: content as OutputData });
       } else {
-        updateBlog({ ...data, content });
+        updateBlog({ ...data, content: content as OutputData });
       }
     }
   };

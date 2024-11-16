@@ -1,3 +1,5 @@
+import { OutputData } from "@editorjs/editorjs";
+
 type IQueryResponse<T = unknown> = {
   success: boolean;
   message: string;
@@ -24,5 +26,5 @@ interface IBlog {
   createdAt?: string;
   author: string;
   image: string;
-  content: unknown;
+  content: OutputData;
 }
