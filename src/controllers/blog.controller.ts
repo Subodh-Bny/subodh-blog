@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import Blog from "@/models/blog.model";
-import { NextApiRequest } from "next";
 import mongoose from "mongoose";
+import { internalError } from "./internalError";
 
 const createBlog = async (req: Request) => {
   if (req.method !== "POST") {
@@ -33,13 +33,17 @@ const createBlog = async (req: Request) => {
       );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newFields: any = {};
+    if (title?.trim()) newFields.title = title;
+    if (description?.trim()) newFields.description = description;
+    if (author?.trim()) newFields.author = author;
+    if (typeof image === "string") newFields.image = image;
+    if (slug?.trim()) newFields.slug = slug;
+
     const newBlog = new Blog({
-      title,
-      description,
+      ...newFields,
       content,
-      author,
-      image,
-      slug,
     });
     await newBlog.save();
 
@@ -48,11 +52,7 @@ const createBlog = async (req: Request) => {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Internal Server Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error", error },
-      { status: 500 }
-    );
+    return internalError("Error in  createBlog  controller", error);
   }
 };
 
@@ -73,14 +73,14 @@ const getAllBlogs = async (req: Request) => {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Internal Server Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error", error },
-      { status: 500 }
-    );
+    return internalError("Error in  getAllBlog  controller", error);
   }
 };
-const updateBlog = async (req: NextApiRequest) => {
+
+const updateBlog = async (
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) => {
   if (req.method !== "PUT") {
     return NextResponse.json(
       { message: "Method not allowed." },
@@ -90,7 +90,7 @@ const updateBlog = async (req: NextApiRequest) => {
 
   try {
     await dbConnect();
-    const { id } = req.query;
+    const id = (await params).id;
     if (!id) {
       return NextResponse.json(
         { message: "Blog ID is required." },
@@ -98,31 +98,39 @@ const updateBlog = async (req: NextApiRequest) => {
       );
     }
 
+    // Check if the ID is a valid MongoDB ObjectId
     if (!mongoose.Types.ObjectId.isValid(id as string)) {
       return NextResponse.json(
-        { message: "Blog ID invalid." },
+        { message: "Blog ID is invalid." },
         { status: 400 }
       );
     }
 
-    const { title, description, content, author, image, slug } = await req.body;
+    const { title, description, content, author, image, slug } =
+      await req.json();
 
-    if (
-      !title?.trim() ||
-      !content?.trim() ||
-      !author?.trim() ||
-      !slug?.trim()
-    ) {
+    if (!title?.trim() || !author?.trim() || !slug?.trim()) {
       return NextResponse.json(
         { message: "Please provide all required fields." },
         { status: 400 }
       );
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateFields: any = {};
+    if (title?.trim()) updateFields.title = title;
+    if (description?.trim()) updateFields.description = description;
+    if (author?.trim()) updateFields.author = author;
+    if (typeof image === "string") updateFields.image = image;
+    if (slug?.trim()) updateFields.slug = slug;
+
     const updatedBlog = await Blog.findByIdAndUpdate(
       id,
-      { title, description, content, author, image, slug },
-      { new: true, runValidators: true }
+      { ...updateFields, content },
+      {
+        new: true,
+        runValidators: true,
+      }
     );
 
     if (!updatedBlog) {
@@ -134,12 +142,52 @@ const updateBlog = async (req: NextApiRequest) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Internal Server Error:", error);
-    return NextResponse.json(
-      { message: "Internal server error", error },
-      { status: 500 }
-    );
+    return internalError("Error in  updateBlog  controller", error);
   }
 };
 
-export { createBlog, getAllBlogs, updateBlog };
+const deleteBlog = async (
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  if (req.method !== "DELETE") {
+    return NextResponse.json(
+      { message: "Method not allowed." },
+      { status: 405 } // 405 for "Method Not Allowed"
+    );
+  }
+
+  try {
+    await dbConnect();
+    const id = (await params).id;
+    if (!id) {
+      return NextResponse.json(
+        { message: "Blog ID is required." },
+        { status: 400 }
+      );
+    }
+
+    // Check if the ID is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id as string)) {
+      return NextResponse.json(
+        { message: "Blog ID is invalid." },
+        { status: 400 }
+      );
+    }
+
+    const deletedBlog = await Blog.findByIdAndDelete(id);
+
+    if (!deletedBlog) {
+      return NextResponse.json({ message: "Blog not found." }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { message: "Blog deleted successfully.", data: deletedBlog },
+      { status: 200 }
+    );
+  } catch (error) {
+    return internalError("Error in  deleteBlog  controller", error);
+  }
+};
+
+export { createBlog, getAllBlogs, updateBlog, deleteBlog };

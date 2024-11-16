@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,16 +22,27 @@ const EditForm = ({
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<IBlog>();
 
+  const editorRef = useRef<{
+    clear: () => void;
+  } | null>(null);
   const [content, setContent] = useState<OutputData | unknown>();
   const { mutate } = useCreateBlog({
     onSuccess: () => {
-      console.log("Blog saved successfully");
+      editorRef.current?.clear();
+      setIsEditing(false);
+      reset();
     },
   });
 
-  const { mutate: updateBlog } = useUpdateBlog();
+  const { mutate: updateBlog } = useUpdateBlog({
+    onSuccess: () => {
+      setIsEditing(false);
+      reset();
+    },
+  });
 
   useEffect(() => {
     if (post) {
@@ -41,7 +52,6 @@ const EditForm = ({
       setValue("author", post.author);
       setValue("description", post.description);
       setValue("slug", post.slug);
-      //   setValue("image", post.image);
     }
   }, [post]);
 
@@ -169,7 +179,11 @@ const EditForm = ({
             placeholder="Enter blog content"
             rows={6}
           /> */}
-            <Editor onChange={setContent} />
+            <Editor
+              onChange={setContent}
+              ref={editorRef}
+              data={post?.content as OutputData}
+            />
           </div>
           <div className="space-x-2">
             <Button type="submit">Save Blog</Button>

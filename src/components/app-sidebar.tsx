@@ -37,7 +37,10 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent className="py-6 space">
             <SidebarGroupLabel className="mb-5">
-              <Link href="/" className="text-3xl font-bold text-primary">
+              <Link
+                href="/dashboard"
+                className="text-3xl font-bold text-primary"
+              >
                 NextBlog
               </Link>
             </SidebarGroupLabel>

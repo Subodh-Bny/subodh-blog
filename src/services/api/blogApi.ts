@@ -6,6 +6,8 @@ import { requestError } from "./requestError";
 import toast from "react-hot-toast";
 
 export const useCreateBlog = ({ onSuccess }: { onSuccess: () => void }) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ["blog"],
     mutationFn: async (data: IBlog) => {
@@ -15,6 +17,8 @@ export const useCreateBlog = ({ onSuccess }: { onSuccess: () => void }) => {
     },
     onSuccess: (data) => {
       toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["blog"] });
+
       onSuccess();
     },
     onError: (error) => {
@@ -23,7 +27,7 @@ export const useCreateBlog = ({ onSuccess }: { onSuccess: () => void }) => {
   });
 };
 
-export const useUpdateBlog = () => {
+export const useUpdateBlog = ({ onSuccess }: { onSuccess: () => void }) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["blog"],
@@ -38,6 +42,27 @@ export const useUpdateBlog = () => {
     onSuccess: (data) => {
       toast.success(data.message);
       queryClient.invalidateQueries({ queryKey: ["blog"] });
+      onSuccess();
+    },
+    onError: (error) => {
+      requestError(error as AxiosError<IApiResponse, unknown>);
+    },
+  });
+};
+
+export const useDeleteBlog = ({ onSuccess }: { onSuccess: () => void }) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["blog"],
+    mutationFn: async (id: string) => {
+      const response: AxiosResponse<IQueryResponse<IBlog>> =
+        await axiosInstance.delete<IApiResponse>(endpoints.blog + "/" + id);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      toast.success(data.message);
+      queryClient.invalidateQueries({ queryKey: ["blog"] });
+      onSuccess();
     },
     onError: (error) => {
       requestError(error as AxiosError<IApiResponse, unknown>);
@@ -47,7 +72,7 @@ export const useUpdateBlog = () => {
 
 export const useGetAllBlogs = () => {
   return useQuery<IBlog[], AxiosError>({
-    queryKey: ["blogs"],
+    queryKey: ["blog"],
     queryFn: async () => {
       const response: AxiosResponse<IQueryResponse<IBlog[]>> =
         await axiosInstance.get<IQueryResponse<IBlog[]>>(endpoints.blog);
