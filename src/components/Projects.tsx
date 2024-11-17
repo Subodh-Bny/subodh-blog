@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const projets = [
   {
@@ -8,22 +9,26 @@ const projets = [
     alt: "ecommerce",
     title: "ECommerce platform",
     description: "Modern shopping experience with React",
+    link: "https://brushstroke-portal.onrender.com/",
   },
   {
     image: "/portfolio.png",
     alt: "portfolio",
     title: "Portfolio ",
     description: "Responseive personal showcase",
+    link: "https://subodh-portfolio.vercel.app/",
   },
   {
     image: "/chat-app.png",
     alt: "chat app",
     title: "Chat web app",
     description: "Chat app using React js",
+    link: "https://chat-app-subodh.onrender.com",
   },
 ];
 
 const Projects = () => {
+  const router = useRouter();
   return (
     <>
       <motion.section
@@ -44,7 +49,8 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-lg bg-card"
+              className="group relative overflow-hidden rounded-lg bg-card hover:cursor-pointer"
+              onClick={() => router.push(item.link)}
             >
               <div className="aspect-video relative">
                 <Image

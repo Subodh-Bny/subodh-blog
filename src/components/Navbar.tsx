@@ -43,7 +43,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/" className="text-2xl font-bold text-primary">
-              NextBlog
+              SubodhBlog
             </Link>
           </div>
 
@@ -67,12 +67,7 @@ const Navbar = () => {
             >
               Blog
             </Link>
-            <Link
-              href="/contact"
-              className="hover:text-primary hover:brightness-125 hover:scale-105 transition-all duration-200 ease-in-out"
-            >
-              Contact
-            </Link>
+
             <div className="flex gap-2">
               <Link
                 href={"/login"}
@@ -104,7 +99,7 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent>
                 <SheetHeader>
-                  <SheetTitle>NextBlog</SheetTitle>
+                  <SheetTitle>SubodhBlog</SheetTitle>
                   <SheetDescription className="flex flex-col  space-y-4 items-center">
                     <Link href="/" className=" ">
                       Home

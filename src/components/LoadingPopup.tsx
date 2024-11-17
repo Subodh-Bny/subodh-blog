@@ -24,14 +24,11 @@ export default function LoadingPopup({
       aria-live="assertive"
       role="alert"
     >
-      <div className="rounded-lg bg-card p-6 shadow-lg">
-        <div className="flex flex-col items-center space-y-2">
-          {/* <Loader2 className="h-8 w-8 animate-spin text-primary" /> */}
-          <PacmanLoader color="#6100ff" />
-          <p className="text-center text-sm font-medium text-muted-foreground">
-            {message}
-          </p>
-        </div>
+      <div className="flex flex-col items-center space-y-2">
+        <PacmanLoader color="#6100ff" />
+        <p className="text-center text-sm font-medium text-muted-foreground">
+          {message}
+        </p>
       </div>
     </div>
   );

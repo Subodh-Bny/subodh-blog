@@ -41,7 +41,7 @@ export function AppSidebar() {
                 href="/dashboard"
                 className="text-3xl font-bold text-primary"
               >
-                NextBlog
+                SubodhBlog
               </Link>
             </SidebarGroupLabel>
             <SidebarMenu className="pl-4">

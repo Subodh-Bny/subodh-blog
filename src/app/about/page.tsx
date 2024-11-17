@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Projects from "@/components/Projects";
+import Link from "next/link";
 
 export default function About() {
   return (
@@ -40,9 +41,12 @@ export default function About() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              <Button variant="default" size="lg">
+              <Link
+                href={"/#welcome"}
+                className={buttonVariants({ variant: "default" })}
+              >
                 Get in Touch
-              </Button>
+              </Link>
             </motion.div>
           </div>
           <motion.div

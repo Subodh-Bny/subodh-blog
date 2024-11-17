@@ -3,9 +3,18 @@ import Image from "next/image";
 import Typed from "typed.js";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { useGetAllBlogs } from "@/services/api/blogApi";
+import Spinner from "@/components/Spinner";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const el = useRef(null);
+  const router = useRouter();
+  const {
+    data: blogs,
+    isLoading: blogLoading,
+    isError: blogError,
+  } = useGetAllBlogs();
 
   useEffect(() => {
     const typed = new Typed(el.current, {
@@ -49,7 +58,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="container px-4 py-16 mx-auto">
+      <section className="container px-4 py-16 mx-auto" id="welcome">
         <div className="text-center">
           <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-200">
             Welcome to Our Platform
@@ -190,68 +199,46 @@ export default function Home() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Blog Card 1 */}
-            <div className="group  rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="aspect-video animate-[pulse_2s_ease-in-out]">
-                <Image
-                  src={"/react.webp"}
-                  height={500}
-                  width={500}
-                  alt="blog thumbnail"
-                  className="object-cover w-full h-full"
-                />
+            {blogLoading ? (
+              <div className="col-span-3  place-self-center">
+                <Spinner />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">
-                  Understanding React Hooks
-                </h3>
-                <p className="text-gray-600">
-                  Deep dive into React&apos;s hook system
-                </p>
-              </div>
-            </div>
-
-            {/* Blog Card 2 */}
-            <div className="group  rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="aspect-video  animate-[pulse_2s_ease-in-out]">
-                <Image
-                  src={"/tailwind.webp"}
-                  height={500}
-                  width={500}
-                  alt="blog thumbnail"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">
-                  Advance CSS techniques
-                </h3>
-                <p className="text-gray-600">
-                  Modern styling approaches with CSS
-                </p>
-              </div>
-            </div>
-
-            {/* Blog Card 3 */}
-            <div className="group  rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <div className="aspect-video  animate-[pulse_2s_ease-in-out]">
-                <Image
-                  src={"/nextjs.webp"}
-                  height={500}
-                  width={500}
-                  alt="blog thumbnail"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">
-                  Next.js 13 Features
-                </h3>
-                <p className="text-gray-600">
-                  Exploring the latest Next.js updates
-                </p>
-              </div>
-            </div>
+            ) : blogError ? (
+              <p className="text-center col-span-3">Error loading blogs</p>
+            ) : (
+              blogs?.map((blog, index) => {
+                if (index < 3) {
+                  return (
+                    <div
+                      key={blog._id}
+                      onClick={() => router.push("/blogpost/" + blog.slug)}
+                      className="group hover:cursor-pointer rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                    >
+                      <div className="aspect-video animate-[pulse_2s_ease-in-out]">
+                        <Image
+                          src={
+                            blog.image && blog.image?.trim() !== ""
+                              ? blog.image
+                              : "/react.webp"
+                          }
+                          height={500}
+                          width={500}
+                          alt="blog thumbnail"
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-semibold mb-2">
+                          {blog.title}
+                        </h3>
+                        <p className="text-gray-600">{blog.description}</p>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })
+            )}
           </div>
         </div>
       </section>

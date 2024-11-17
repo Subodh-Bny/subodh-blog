@@ -77,7 +77,6 @@ export const useGetAllBlogs = () => {
     queryFn: async () => {
       const response: AxiosResponse<IQueryResponse<IBlog[]>> =
         await axiosInstance.get<IQueryResponse<IBlog[]>>(endpoints.blog);
-      console.log(response.data.data);
       return response.data.data || [];
     },
     staleTime: 1000 * 60 * 5,
