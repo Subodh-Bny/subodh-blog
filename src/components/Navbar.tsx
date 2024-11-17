@@ -1,7 +1,6 @@
-// app/components/Navbar.tsx
 "use client";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   Sheet,
   SheetContent,
@@ -13,11 +12,13 @@ import {
 import { ModeToggle } from "./ThemeButton";
 import LoadingBar from "react-top-loading-bar";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 const Navbar = () => {
   const [progress, setProgress] = useState(0);
   const pathname = usePathname();
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   useEffect(() => {
     setProgress(30);
@@ -67,14 +68,27 @@ const Navbar = () => {
             >
               Blog
             </Link>
-
-            <div className="flex gap-2">
+            {isLoggedIn && (
               <Link
-                href={"/login"}
-                className={buttonVariants({ variant: "outline" })}
+                href="/dashboard"
+                className="hover:text-primary hover:brightness-125 hover:scale-105 transition-all duration-200 ease-in-out"
               >
-                Login
+                Dashboard
               </Link>
+            )}
+            <div className="flex gap-2">
+              {isLoggedIn ? (
+                <Button onClick={logout} variant={"destructive"}>
+                  Logout
+                </Button>
+              ) : (
+                <Link
+                  href={"/login"}
+                  className={buttonVariants({ variant: "outline" })}
+                >
+                  Login
+                </Link>
+              )}
               {/* <Button variant={"outline"}>Signup</Button> */}
               <ModeToggle />
             </div>

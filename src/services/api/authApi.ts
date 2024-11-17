@@ -6,12 +6,15 @@ import { requestError } from "./requestError";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { IApiResponse, IQueryResponse, IUser } from "@/types";
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 interface ILoginResponse<T = unknown> extends IQueryResponse {
   token?: string;
   data?: T;
 }
 export const useLogin = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { setToken, setIsLoggedIn } = useContext(AuthContext);
   const router = useRouter();
   return useMutation({
     mutationKey: ["user"],
@@ -23,6 +26,10 @@ export const useLogin = ({ onSuccess }: { onSuccess: () => void }) => {
     onSuccess: (data) => {
       toast.success(data.message);
       router.push("/");
+      if (data.token) {
+        setToken(data.token);
+        setIsLoggedIn(true);
+      }
       onSuccess();
     },
     onError: (error) => {

@@ -8,6 +8,7 @@ import React, {
 import EditorJS, { OutputData } from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
+import CodeTool from "@editorjs/code";
 
 const Editor = forwardRef(
   (
@@ -41,6 +42,7 @@ const Editor = forwardRef(
                 class: List as any,
                 inlineToolbar: true,
               },
+              code: CodeTool,
             },
             onReady: () => {
               console.log("Editor.js is ready!");
