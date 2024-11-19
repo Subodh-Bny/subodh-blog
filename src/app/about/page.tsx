@@ -53,10 +53,10 @@ export default function About() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="relative h-[400px] rounded-lg overflow-hidden"
+            className="relative h-[400px] md:w-[400px] rounded-full overflow-hidden "
           >
             <Image
-              src="/subodh.png"
+              src="/profile.jpg"
               alt="subodh"
               fill
               className="object-cover"

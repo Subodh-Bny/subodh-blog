@@ -54,6 +54,7 @@ export default function Home() {
             height={500}
             src="/hero.svg"
             alt="blog hero image"
+            priority
             className="w-full h-full max-w-md mx-auto "
           />
         </div>
