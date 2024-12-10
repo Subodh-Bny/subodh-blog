@@ -132,8 +132,8 @@ export default function Home() {
                 },
                 {
                   platform: "LinkedIn",
-                  handle: "in/subodh-adhikari-0469922a7",
-                  link: "www.linkedin.com/in/subodh-adh",
+                  handle: "in/subodh-adh",
+                  link: "https://linkedin.com/in/subodh-adh",
                 },
                 {
                   platform: "Instagram",

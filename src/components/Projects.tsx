@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 
 const projets = [
   {
-    image: "/ecommerce.png",
-    alt: "ecommerce",
-    title: "ECommerce platform",
-    description: "Modern shopping experience with React",
-    link: "https://brushstroke-portal.onrender.com/",
+    image: "/spend-mentor.png",
+    alt: "spend mentor",
+    title: "Spend Mentor",
+    description: "Budget management system",
+    link: "https://spend-mentor.vercel.app/",
   },
   {
     image: "/portfolio.png",
